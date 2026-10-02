@@ -1,6 +1,13 @@
 // Os dados ficam apenas na memória.
 // Se a página for atualizada, eles serão apagados.
-const pratos = [];
+// Alguns pratos já vêm pré-cadastrados só para o site não abrir vazio.
+const pratos = [
+  { nome: "Salada Caesar", categoria: "Entrada", preco: 22.90, imagem: "https://picsum.photos/seed/salada-caesar/400/300" },
+  { nome: "Lasanha à Bolonhesa", categoria: "Prato principal", preco: 38.50, imagem: "https://picsum.photos/seed/lasanha-bolonhesa/400/300" },
+  { nome: "Hambúrguer Artesanal", categoria: "Prato principal", preco: 32.00, imagem: "https://picsum.photos/seed/hamburguer-artesanal/400/300" },
+  { nome: "Petit Gâteau", categoria: "Sobremesa", preco: 18.00, imagem: "https://picsum.photos/seed/petit-gateau/400/300" },
+  { nome: "Suco Natural", categoria: "Bebida", preco: 9.50, imagem: "https://picsum.photos/seed/suco-natural/400/300" }
+];
 const pedido = [];
 
 const app = document.querySelector("#app");
@@ -23,15 +30,13 @@ function irPara(rota) {
 
 function mostrarInicio() {
   app.innerHTML = `
-    <h1>Cardápio do Restaurante</h1>
-    <p>
-      Este é um exemplo simples de SPA feita com HTML, CSS e JavaScript.
-      A navegação acontece sem recarregar a página.
-    </p>
-
-    <p>
-      Os pratos cadastrados e os itens do pedido ficam temporariamente guardados em arrays JavaScript.
-    </p>
+    <div class="hero">
+      <h1>Bem-vindo ao Sabor & Cia</h1>
+      <p>
+        Confira nosso cardápio, monte seu pedido e acompanhe o total em tempo real.
+        Tudo isso em uma única página, sem recarregar.
+      </p>
+    </div>
 
     <div class="contador">
       Pratos cadastrados nesta sessão: <strong>${pratos.length}</strong>
@@ -70,6 +75,11 @@ function mostrarCadastro() {
         <input id="preco" type="number" step="0.01" min="0" placeholder="Digite o preço" required />
       </div>
 
+      <div class="campo">
+        <label for="imagem">URL da imagem (opcional)</label>
+        <input id="imagem" type="url" placeholder="Cole o link de uma imagem, se quiser" />
+      </div>
+
       <button class="botao" type="submit">Salvar prato</button>
       <div id="mensagem"></div>
     </form>
@@ -81,11 +91,17 @@ function mostrarCadastro() {
     const nome = document.querySelector("#nome").value.trim();
     const categoria = document.querySelector("#categoria").value.trim();
     const preco = Number(document.querySelector("#preco").value);
+    const imagemInformada = document.querySelector("#imagem").value.trim();
+
+    const imagem = imagemInformada
+      ? imagemInformada
+      : `https://picsum.photos/seed/${encodeURIComponent(nome)}/400/300`;
 
     pratos.push({
       nome,
       categoria,
-      preco
+      preco,
+      imagem
     });
 
     document.querySelector("#mensagem").innerHTML =
@@ -98,7 +114,7 @@ function mostrarCadastro() {
 function mostrarCardapio() {
   app.innerHTML = `
     <h1>Cardápio</h1>
-    <p>Estas tabelas são criadas dinamicamente pelo JavaScript a partir dos arrays de pratos e do pedido.</p>
+    <p>Estes cartões são criados dinamicamente pelo JavaScript a partir do array de pratos.</p>
     <div id="conteudoCardapio"></div>
 
     <h2>Meu Pedido</h2>
@@ -121,36 +137,23 @@ function renderizarCardapio() {
     return;
   }
 
-  let linhas = "";
+  let cartoes = "";
 
   pratos.forEach((prato, indice) => {
-    linhas += `
-      <tr>
-        <td>${prato.nome}</td>
-        <td>${prato.categoria}</td>
-        <td>R$ ${prato.preco.toFixed(2)}</td>
-        <td>
+    cartoes += `
+      <div class="cartao-prato">
+        <img src="${prato.imagem}" alt="${prato.nome}" />
+        <div class="conteudo">
+          <span class="categoria">${prato.categoria}</span>
+          <span class="nome">${prato.nome}</span>
+          <span class="preco">R$ ${prato.preco.toFixed(2)}</span>
           <button class="adicionar" data-indice="${indice}">Adicionar ao pedido</button>
-        </td>
-      </tr>
+        </div>
+      </div>
     `;
   });
 
-  conteudo.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Prato</th>
-          <th>Categoria</th>
-          <th>Preço</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${linhas}
-      </tbody>
-    </table>
-  `;
+  conteudo.innerHTML = `<div class="grade-cardapio">${cartoes}</div>`;
 
   document.querySelectorAll(".adicionar").forEach(botao => {
     botao.addEventListener("click", function() {
