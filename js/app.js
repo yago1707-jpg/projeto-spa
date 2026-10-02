@@ -284,10 +284,12 @@ function renderizarPedido() {
 
 function mostrarSobre() {
   app.innerHTML = `
-    <h1>Sobre o projeto</h1>
-    <p>Este exemplo foi criado para demonstrar uma Single Page Application simples.</p>
-    <p>Existe apenas um arquivo HTML. Ao clicar nas opções do menu, o JavaScript modifica o conteúdo do elemento <strong>#app</strong>.</p>
-    <p>O projeto também demonstra cadastro em array, manipulação do DOM, eventos de clique, envio de formulário, listagem e a ação de adicionar/remover itens de um pedido.</p>
+    <h1>🍽️ Cardápio do Desenvolvedor</h1>
+    <p>👨‍💻 Yago Barros Santos Porto Jardim</p>
+    <p>🎂 19 anos</p>
+    <p>🎓 Graduando em Análise e Desenvolvimento de Sistemas — 3º período</p>
+    <p>📋 Aqui você encontra um pouco sobre mim, meus projetos, conhecimentos e minha evolução na área de tecnologia.</p>
+    <p>Especialidade da casa: programação, tecnologia e muita vontade de aprender. 🚀</p>
   `;
 }
 
