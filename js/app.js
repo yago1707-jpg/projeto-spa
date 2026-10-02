@@ -6,7 +6,7 @@ const pratos = [
     nome: "Salada Caesar",
     categoria: "Entrada",
     preco: 22.90,
-    imagem: "Sala_Caesar.jpg",
+    imagem: "https://images.unsplash.com/photo-1537785713284-0015ce8a145c?w=600&q=80&auto=format&fit=crop",
     descricao: "Alface fresca, croutons crocantes, lascas de parmesão e o tradicional molho Caesar."
   },
   {
